@@ -1,0 +1,55 @@
+{
+  "id": "decision_table_p_14",
+  "name": "Decision Table for p_14",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev1": [
+          "O_CANCELLED"
+        ],
+        "tail::prev3": [
+          "O_SELECTED"
+        ],
+        "event::org:resource": [
+          "10138",
+          "10629"
+        ]
+      },
+      "output": "O_SENT_BACK",
+      "description": "Support: 0.11, Samples: 651"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev1": [
+          "O_CANCELLED"
+        ],
+        "tail::prev3": [
+          "not(O_SELECTED)"
+        ]
+      },
+      "output": "O_SENT_BACK",
+      "description": "Support: 0.49, Samples: 2978"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev1": [
+          "not(O_CANCELLED)"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.39, Samples: 2373"
+    }
+  ]
+}

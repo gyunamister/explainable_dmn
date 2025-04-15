@@ -1,0 +1,32 @@
+{
+  "id": "decision_table_p_45",
+  "name": "Decision Table for p_45",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "tail::prev1",
+    "tail::prev2",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev3": [
+          "W_Valideren aanvraag",
+          "O_ACCEPTED"
+        ],
+        "tail::prev2": [
+          "O_ACCEPTED"
+        ],
+        "tail::prev1": [
+          "O_ACCEPTED"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.83, Samples: 10919"
+    }
+  ]
+}

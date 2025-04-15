@@ -1,0 +1,67 @@
+{
+  "id": "decision_table_p_6",
+  "name": "Decision Table for p_6",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev2",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev3": [
+          "W_Nabellen offertes"
+        ],
+        "tail::prev2": [
+          "W_Completeren aanvraag",
+          "W_Afhandelen leads"
+        ],
+        "tail::prev1": [
+          "O_CANCELLED"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.77, Samples: 10095"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev3": [
+          "W_Nabellen offertes"
+        ],
+        "tail::prev2": [
+          "not(W_Completeren aanvraag)"
+        ],
+        "event::org:resource": [
+          "11309",
+          "11299"
+        ]
+      },
+      "output": "A_CANCELLED",
+      "description": "Support: 0.09, Samples: 1144"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev3": [
+          "not(W_Nabellen offertes)"
+        ],
+        "event::org:resource": [
+          "11300",
+          "11169"
+        ],
+        "tail::prev1": [
+          "O_CANCELLED"
+        ]
+      },
+      "output": "A_CANCELLED",
+      "description": "Support: 0.07, Samples: 922"
+    }
+  ]
+}

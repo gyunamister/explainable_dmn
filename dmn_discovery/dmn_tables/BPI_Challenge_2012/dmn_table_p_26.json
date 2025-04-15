@@ -1,0 +1,17 @@
+{
+  "id": "decision_table_p_26",
+  "name": "Decision Table for p_26",
+  "hit_policy": "FIRST",
+  "input_expressions": [],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {},
+      "output": null,
+      "description": "Support: 1.00, Samples: 12"
+    }
+  ]
+}

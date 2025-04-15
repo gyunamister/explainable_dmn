@@ -1,0 +1,63 @@
+{
+  "id": "decision_table_p_4",
+  "name": "Decision Table for p_4",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "case::AMOUNT_REQ_NUM",
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev2"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev1": [
+          "O_SENT_BACK"
+        ],
+        "tail::prev2": [
+          "O_CREATED"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.33, Samples: 1640"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev1": [
+          "O_SENT_BACK"
+        ],
+        "tail::prev2": [
+          "not(O_CREATED)"
+        ],
+        "event::org:resource": [
+          "10138",
+          "10972"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.07, Samples: 351"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev1": [
+          "not(O_SENT_BACK)"
+        ],
+        "event::org:resource": [
+          "11319"
+        ],
+        "case::AMOUNT_REQ_NUM": [
+          "<= 43495.0",
+          "> 3050.0"
+        ]
+      },
+      "output": "O_ACCEPTED",
+      "description": "Support: 0.55, Samples: 2741"
+    }
+  ]
+}

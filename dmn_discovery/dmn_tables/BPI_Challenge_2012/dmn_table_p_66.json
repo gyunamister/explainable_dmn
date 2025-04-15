@@ -1,0 +1,32 @@
+{
+  "id": "decision_table_p_66",
+  "name": "Decision Table for p_66",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "tail::prev1",
+    "tail::prev2",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev3": [
+          "W_Valideren aanvraag",
+          "W_Nabellen incomplete dossiers"
+        ],
+        "tail::prev1": [
+          "A_DECLINED"
+        ],
+        "tail::prev2": [
+          "W_Nabellen offertes"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.89, Samples: 8561"
+    }
+  ]
+}

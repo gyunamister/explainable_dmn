@@ -1,0 +1,23 @@
+{
+  "id": "decision_table_p_11",
+  "name": "Decision Table for p_11",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "case::Item Type"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "case::Item Type": [
+          "Service"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.99, Samples: 3863"
+    }
+  ]
+}

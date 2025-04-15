@@ -1,0 +1,43 @@
+{
+  "id": "decision_table_p_14",
+  "name": "Decision Table for p_14",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev2"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev2": [
+          "W_Completeren aanvraag",
+          "W_Afhandelen leads"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.57, Samples: 7492"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev2": [
+          "not(W_Completeren aanvraag)"
+        ],
+        "tail::prev1": [
+          "not(W_Completeren aanvraag)"
+        ],
+        "event::org:resource": [
+          "11309",
+          "11299"
+        ]
+      },
+      "output": "A_ACCEPTED",
+      "description": "Support: 0.35, Samples: 4534"
+    }
+  ]
+}

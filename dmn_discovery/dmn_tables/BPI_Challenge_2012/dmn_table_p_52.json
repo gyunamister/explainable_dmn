@@ -1,0 +1,59 @@
+{
+  "id": "decision_table_p_52",
+  "name": "Decision Table for p_52",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "case::AMOUNT_REQ_NUM",
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev2"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev1": [
+          "A_PARTLYSUBMITTED"
+        ],
+        "tail::prev2": [
+          "W_Afhandelen leads",
+          "W_Beoordelen fraude"
+        ],
+        "event::org:resource": [
+          "11169"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.42, Samples: 5539"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev1": [
+          "A_PARTLYSUBMITTED"
+        ],
+        "tail::prev2": [
+          "not(W_Afhandelen leads)"
+        ],
+        "case::AMOUNT_REQ_NUM": [
+          "> 275.0"
+        ]
+      },
+      "output": "A_PREACCEPTED",
+      "description": "Support: 0.19, Samples: 2505"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev1": [
+          "not(A_PARTLYSUBMITTED)"
+        ]
+      },
+      "output": "A_PREACCEPTED",
+      "description": "Support: 0.37, Samples: 4852"
+    }
+  ]
+}

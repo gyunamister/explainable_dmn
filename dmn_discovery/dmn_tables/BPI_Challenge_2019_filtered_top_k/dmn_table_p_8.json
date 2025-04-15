@@ -1,0 +1,29 @@
+{
+  "id": "decision_table_p_8",
+  "name": "Decision Table for p_8",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "case::Vendor",
+    "event::concept:name"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "event::concept:name": [
+          "not(Record Invoice Receipt)"
+        ],
+        "case::Vendor": [
+          "vendorID_0120",
+          "vendorID_0524",
+          "vendorID_0404"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.84, Samples: 3275"
+    }
+  ]
+}

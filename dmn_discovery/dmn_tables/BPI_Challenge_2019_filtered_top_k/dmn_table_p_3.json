@@ -1,0 +1,26 @@
+{
+  "id": "decision_table_p_3",
+  "name": "Decision Table for p_3",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "case::Vendor"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "case::Vendor": [
+          "vendorID_0246",
+          "vendorID_0316",
+          "vendorID_0492",
+          "vendorID_0122"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.97, Samples: 3809"
+    }
+  ]
+}

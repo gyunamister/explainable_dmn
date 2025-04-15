@@ -1,0 +1,48 @@
+{
+  "id": "decision_table_p_16",
+  "name": "Decision Table for p_16",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::org:resource",
+    "tail::prev1",
+    "tail::prev2",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev3": [
+          "W_Valideren aanvraag",
+          "O_ACCEPTED"
+        ],
+        "tail::prev2": [
+          "W_Valideren aanvraag",
+          "O_ACCEPTED"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.83, Samples: 10860"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev3": [
+          "not(W_Valideren aanvraag)"
+        ],
+        "tail::prev1": [
+          "W_Nabellen incomplete dossiers",
+          "W_Valideren aanvraag"
+        ],
+        "event::org:resource": [
+          "11289"
+        ]
+      },
+      "output": "A_APPROVED",
+      "description": "Support: 0.06, Samples: 840"
+    }
+  ]
+}

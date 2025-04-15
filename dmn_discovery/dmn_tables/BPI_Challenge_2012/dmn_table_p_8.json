@@ -1,0 +1,53 @@
+{
+  "id": "decision_table_p_8",
+  "name": "Decision Table for p_8",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "tail::prev1",
+    "tail::prev2",
+    "tail::prev3"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev1": [
+          "O_SELECTED",
+          "A_ACCEPTED"
+        ],
+        "tail::prev3": [
+          "A_ACCEPTED"
+        ],
+        "tail::prev2": [
+          "W_Completeren aanvraag"
+        ]
+      },
+      "output": null,
+      "description": "Support: 0.57, Samples: 7512"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev1": [
+          "O_SELECTED",
+          "not(A_ACCEPTED)"
+        ]
+      },
+      "output": "A_FINALIZED",
+      "description": "Support: 0.16, Samples: 2089"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev1": [
+          "not(O_SELECTED)"
+        ]
+      },
+      "output": "A_FINALIZED",
+      "description": "Support: 0.22, Samples: 2907"
+    }
+  ]
+}

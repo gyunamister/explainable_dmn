@@ -6,6 +6,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 
 from typing import List, Dict, Any, Tuple
+import pm4py
 from pm4py.objects.log.obj import EventLog
 from pm4py.objects.petri_net.obj import PetriNet, Marking
 from exdpn.util import import_log
@@ -21,7 +22,8 @@ def main(event_log: EventLog,
          event_level_attributes: List[str] = [],
          tail_length: int = 3,
          activityName_key: str = xes.DEFAULT_NAME_KEY,
-         verbose: bool = True) -> Tuple[PetriNet, Marking, Marking, Dict, Dict, Dict, Dict]:
+         verbose: bool = True,
+         output_dir: str = 'dmn_tables') -> Tuple[PetriNet, Marking, Marking, Dict, Dict, Dict, Dict]:
     """Processes an event log to extract a Petri net and train guards for decision points.
 
     Args:
@@ -31,14 +33,8 @@ def main(event_log: EventLog,
         event_level_attributes (List[str], optional): Event-level attributes to consider. Defaults to [].
         tail_length (int, optional): Number of preceding events to record. Defaults to 3.
         activityName_key (str, optional): Key for activity names in the event log. Defaults to xes.DEFAULT_NAME_KEY.
-        ml_list (List[ML_Technique], optional): List of ML techniques to evaluate. Defaults to all implemented techniques.
-        hyperparameters (Dict[ML_Technique, Dict[str, Any]], optional): Hyperparameters for ML techniques. Defaults to standard parameters.
-        CV_splits (int, optional): Number of cross-validation folds. Defaults to 5.
-        CV_shuffle (bool, optional): Whether to shuffle samples before splitting. Defaults to False.
-        random_state (int, optional): Random state for reproducibility. Defaults to None.
-        guard_threshold (float, optional): Performance threshold for adding guards. Defaults to 0.0.
-        impute (bool, optional): Whether to impute missing values. Defaults to False.
         verbose (bool, optional): Whether to print progress messages. Defaults to True.
+        output_dir (str, optional): Directory to save DMN tables. Defaults to 'dmn_tables'.
 
     Returns:
         Tuple containing:
@@ -96,7 +92,7 @@ def main(event_log: EventLog,
         min_rule_support=dmn_min_rule_support,
         verbose=verbose,
         save_tables=True,
-        output_dir='dmn_tables'
+        output_dir=output_dir
     )
     
     if verbose:
@@ -114,37 +110,73 @@ def main(event_log: EventLog,
     )
 
 if __name__ == "__main__":
-    # Example usage
-    event_log = import_log('../datasets/p2p_base.xes')
-    results = main(
-        event_log=event_log,
-        event_level_attributes=['item_category', 'item_id', 'item_amount', 'supplier', 'total_price'],
-        verbose=True
-    )
-    
-    # Unpack results
-    petri_net, initial_marking, final_marking, guard_ds, decision_points, dmn_tables = results
-    
-    # Example of accessing results
-    print(f"\nSummary of results:")
-    print(f"Number of decision points: {len(decision_points)}")
-    
-    # Print some DMN table details
-    print("\nDMN decision tables:")
-    for place, table in dmn_tables.items():
-        print(f"Decision point '{place.name}':")
-        print(f"  - {len(table['rules'])} decision rules")
-        print(f"  - Input features: {', '.join(table['input_expressions'])}")
-        
-        # Print a sample rule if available
-        if table['rules']:
-            print("  - Sample rule:")
-            rule = table['rules'][0]
-            print(f"    * Rule ID: {rule['id']}")
-            print(f"    * Output: {rule['output']}")
-            print(f"    * Description: {rule['description']}")
+    log_names = ['p2p_base', 'BPI_Challenge_2012', 'BPI_Challenge_2012_only_O', 'BPI_Challenge_2019_filtered_top_k']
+    for log_name in log_names:
+        if log_name == 'p2p_base':
+            event_level_attributes = ['item_category', 'item_id', 'item_amount', 'supplier', 'total_price']
+            trace_level_attributes = []
+        elif log_name == 'BPI_Challenge_2012':
+            trace_level_attributes = ['AMOUNT_REQ_NUM']
+            event_level_attributes = ['org:resource']
+        elif log_name == 'BPI_Challenge_2012_only_O':
+            trace_level_attributes = ['AMOUNT_REQ_NUM']
+            event_level_attributes = ['org:resource']
+        elif log_name == 'BPI_Challenge_2019_filtered_top_k':
+            trace_level_attributes = ['Spend area text',
+                'Vendor',
+                'Spend classification text',
+                'Company',
+                'Document Type',
+                'Item Category',
+                'Sub spend area text',
+                'Purch. Doc. Category name',
+                'GR-Based Inv. Verif.',
+                'Item Type',
+                'Source',
+                'Goods Receipt']
+            event_level_attributes = ['concept:name', 'Cumulative net worth (EUR)']
             
-            # Print conditions
-            print("    * Conditions:")
-            for feature, conditions in rule['inputs'].items():
-                print(f"      - {feature}: {', '.join([str(cond) for cond in conditions])}")
+
+        event_log = import_log(f'../datasets/{log_name}.xes')
+
+        if log_name == 'BPI_Challenge_2012':
+            for trace in event_log:
+                trace.attributes['AMOUNT_REQ_NUM'] = float(trace.attributes['AMOUNT_REQ'])
+        elif log_name == 'BPI_Challenge_2012_only_O':
+            for trace in event_log:
+                trace.attributes['AMOUNT_REQ_NUM'] = float(trace.attributes['AMOUNT_REQ'])
+
+        results = main(
+            event_log=event_log,
+            case_level_attributes=trace_level_attributes,
+            event_level_attributes=event_level_attributes,
+            verbose=True,
+            output_dir=f'dmn_tables/{log_name}'
+        )
+        
+        # Unpack results
+        petri_net, initial_marking, final_marking, guard_ds, decision_points, dmn_tables = results
+        
+        # Example of accessing results
+        print(f"\nSummary of results:")
+        print(f"Number of decision points: {len(decision_points)}")
+        
+        # Print some DMN table details
+        print("\nDMN decision tables:")
+        for place, table in dmn_tables.items():
+            print(f"Decision point '{place.name}':")
+            print(f"  - {len(table['rules'])} decision rules")
+            print(f"  - Input features: {', '.join(table['input_expressions'])}")
+            
+            # Print a sample rule if available
+            if table['rules']:
+                print("  - Sample rule:")
+                rule = table['rules'][0]
+                print(f"    * Rule ID: {rule['id']}")
+                print(f"    * Output: {rule['output']}")
+                print(f"    * Description: {rule['description']}")
+                
+                # Print conditions
+                print("    * Conditions:")
+                for feature, conditions in rule['inputs'].items():
+                    print(f"      - {feature}: {', '.join([str(cond) for cond in conditions])}")
