@@ -1,0 +1,34 @@
+{
+  "id": "decision_table_p_3",
+  "name": "Decision Table for p_3",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::total_price"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "event::total_price": [
+          "<= 1002.6950073242188",
+          "<= 793.4750061035156"
+        ]
+      },
+      "output": "request standard approval",
+      "description": "Support: 0.68, Samples: 2719"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "event::total_price": [
+          "> 1002.6950073242188"
+        ]
+      },
+      "output": "request manager approval",
+      "description": "Support: 0.27, Samples: 1085"
+    }
+  ]
+}

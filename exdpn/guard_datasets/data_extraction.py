@@ -169,16 +169,16 @@ def extract_dataset_for_place(
                 # Extract Case-Level Attributes
                 case = log[idx]
                 case_attr_values = [case.attributes.get(
-                    attr, np.NaN) for attr in case_level_attributes]
+                    attr, np.nan) for attr in case_level_attributes]
 
                 if event_index <= 0:
                     # There is no "previous event", so we cannot collect this info
-                    event_attr_values = [np.NaN] * len(event_level_attributes)
+                    event_attr_values = [np.nan] * len(event_level_attributes)
                 else:
                     # Get the values of the event level attribute
                     last_event = case[event_index-1]
                     event_attr_values = [last_event.get(
-                        attr, np.NaN) for attr in event_level_attributes]
+                        attr, np.nan) for attr in event_level_attributes]
 
                 # Finally, extract recent activities
                 tail_activities = []
@@ -326,18 +326,18 @@ def extract_current_decision_for_trace(
         Tuple[Any, List[Any]]: A tuple containing the index for the dataframe (the case-ID) and the list of extracted values.
     """
     case_attr_values = [trace.attributes.get(
-        attr, np.NaN) for attr in case_level_attributes]
+        attr, np.nan) for attr in case_level_attributes]
 
     if len(trace) == 0:
         # There is no "previous event", so we cannot collect this info
-        event_attr_values = [np.NaN] * len(event_level_attributes)
+        event_attr_values = [np.nan] * len(event_level_attributes)
     else:
         # Get the values of the event level attribute
         last_event = trace[-1]
         event_attr_values = [
             last_event.get(
                 attr,
-                np.NaN
+                np.nan
             )
             for attr in event_level_attributes
         ]

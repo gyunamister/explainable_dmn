@@ -1,0 +1,60 @@
+{
+  "id": "decision_table_p_4",
+  "name": "Decision Table for p_4",
+  "hit_policy": "FIRST",
+  "input_expressions": [
+    "event::item_id",
+    "event::total_price",
+    "tail::prev1"
+  ],
+  "outputs": [
+    "next activity decision"
+  ],
+  "rules": [
+    {
+      "id": "rule_1",
+      "inputs": {
+        "tail::prev1": [
+          "request manager approval"
+        ],
+        "event::total_price": [
+          "<= 403.4199981689453"
+        ]
+      },
+      "output": "approve purchase",
+      "description": "Support: 0.57, Samples: 2261"
+    },
+    {
+      "id": "rule_2",
+      "inputs": {
+        "tail::prev1": [
+          "request manager approval"
+        ],
+        "event::total_price": [
+          "> 403.4199981689453"
+        ],
+        "event::item_id": [
+          "Samsung TV FSA34DSJ3",
+          "RYZE Tello Drone"
+        ]
+      },
+      "output": "approve purchase",
+      "description": "Support: 0.12, Samples: 488"
+    },
+    {
+      "id": "rule_3",
+      "inputs": {
+        "tail::prev1": [
+          "not(request manager approval)"
+        ],
+        "event::total_price": [
+          "> 1198.4849853515625",
+          "> 1679.8599853515625",
+          "> 1701.0549926757812"
+        ]
+      },
+      "output": "manager approve purchase",
+      "description": "Support: 0.19, Samples: 774"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-pm4py~=2.2.27
-numpy~=1.21.6
+pm4py==2.2.27
+# numpy~=1.21.6
 matplotlib~=3.5.2
 wheel~=0.37.1
 setuptools~=62.6.0
